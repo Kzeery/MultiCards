@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Index Page!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/main.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="game">
+        <div class="enemy d-flex align-items-start justify-content-center">
+        </div>
+        <div class="send">
+            <div class="discard en-disc mt-3 d-flex align-items-center justify-content-center">
+                <span class="no-card enemy-discard"></span>
+                <span class="no-card enemy-discard"></span>
+                <span class="no-card enemy-discard"></span>
+                <span class="no-card enemy-discard"></span>
+            </div>
+
+            <div class="play d-flex mt-3 align-items-center justify-content-center">
+                <span class='deck'></span>
+                <span class="no-card" num="0"></span>
+                <span class="no-card" num="0"></span>
+                <span class="no-card" num="0"></span>
+                <span class="no-card" num="0"></span>
+            </div>
+
+            <div class="discard you-disc mt-3 d-flex align-items-center justify-content-center">
+                    <span class="no-card you-discard"></span>
+                    <span class="no-card you-discard"></span>
+                    <span class="no-card you-discard"></span>
+                    <span class="no-card you-discard"></span>
+            </div>
+        </div>  
+        <div class="you d-flex align-items-end mt-3 justify-content-center">
+
+        </div>
+    </div>
+    
+    <script src="/scripts/game.js"></script>
+</body>
+</html>

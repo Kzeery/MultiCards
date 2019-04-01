@@ -1,0 +1,24 @@
+{
+  "name": "multicards",
+  "version": "1.0.0",
+  "description": "multiplayer card game!",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kzeery/MultiCards.git"
+  },
+  "author": "Yousif Kzeer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kzeery/MultiCards/issues"
+  },
+  "homepage": "https://github.com/Kzeery/MultiCards#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}
