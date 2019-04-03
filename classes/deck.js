@@ -8,6 +8,7 @@ class Card {
 class Deck {
     constructor() {
         this.cards = [];
+        this.garbage = [];
         for (var i = 1; i < 13; i++) {
             for (var j = 0; j < 12; j++) {
                 this.cards.push(new Card(String(i)));
@@ -25,9 +26,17 @@ class Deck {
         this.deal = function (num) {
             var hand = [];
             for (var i = 0; i < num; i++) {
+                if(!this.cards.length) {
+                    this.cards = this.garbage;
+                    this.garbage = [];
+                    deck.shuffle();
+                }
                 hand.push(this.cards.shift());
             }
             return hand;
+        }
+        this.addGarbage = function(L) {
+            this.garbage = this.garbage.concat(L);
         }
     }
 }
