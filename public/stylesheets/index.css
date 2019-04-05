@@ -1,0 +1,18 @@
+body {
+    background-image: url("../background/background.jpg")
+}
+.custom-container {
+    background-color: #fff;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.3);
+    height: 400px;
+    width: 300px;
+    margin-top: 12%;
+    text-align: center;
+}
+.my-btn {
+    margin-top: 190px;
+    width: 100%;
+}
+.a1 {
+    display: inline-block;
+}
