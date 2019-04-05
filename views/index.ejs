@@ -7,11 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/scripts/index.js"></script>
 </head>
 <body>
     <div class="container custom-container">
-        <h4 class="mt-5 a1">Card Game!</h4>
-        <button class="btn btn-info my-btn">Play With a Friend!</button>
+        <div class="index">
+                <h4 class="mt-5 a1">Card Game!</h4>
+                <button class="btn btn-info my-btn">Play With a Friend!</button>
+                <button class="btn btn-info my-btn mt-2">How to Play</button>
+        </div>
+        <div id="info" hidden="hidden">
+            <h1>This is the info page</h1>
+        </div>
+        <div class="play-info" hidden="hidden">
+            <form action="#" method="POST" class="form">
+                <input type="text" name="username">
+            </form>
+            <!-- <div class="loader" ></div> -->
+        </div>
+
     </div>
     
 </body>
