@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Card Game</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav my-2 ml-auto">
+        <% if(!currentUser) { %>
+            <li class="nav-item active">
+                <a href="/login" class="nav-link">Log in!</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/register" class="nav-link">Sign up!</a>
+            </li>
+        <% } else { %>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add friend</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <form class="form-inline my-2 my-lg-0 dropdown-item findfriend">
+                        <input class="form-control mx-1" type="text" name="findfriend" placeholder="username" aria-label="addfriend">
+                        <button class="btn btn-outline-success" type="submit">Find Friend</button>
+                    </form>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending Friend Requests (<span class="friend-invites-length"><%=currentUser.friendinvites.length %></span>)</a>
+                <div class="dropdown-menu friend-invites" aria-labelledby="navbarDropdown">
+                    <% currentUser.friendinvites.forEach(function(invite) { %>
+                        <div class="dropdown-item invite"><%=invite.username%> <button class="btn btn-success btn-sm ml-4 friend-request" friend="<%=invite.id%>">✓</button><button class="btn btn-sm btn-danger ml-1 friend-request" friend="<%=invite.id%>">X</button></div>
+                        <div class="dropdown-divider invite"></div>
+                    <% }); %>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Friends (<span id="friends-length"><%= currentUser.friends.length %></span>)</a>
+                <div class="dropdown-menu friends" aria-labelledby="navbarDropdown">
+                    <% currentUser.friends.forEach(function(friend) { %>
+                        <div class="dropdown-item">
+                            <a class="hovering" friendId="<%=friend.id%>"><%= friend.username %></a>
+                            <div class="hide buttons mt-2"><a class="btn btn-success invitefriend">Invite</a></div>
+                            <div class="hide buttons mt-2"><a class="btn btn-info" href="/matches/<%= friend.id %>">Match History</a></div>
+                            <div class="hide buttons mt-2"><a class="btn btn-danger removefriend" friendId="<%=friend.id%>">Remove Friend</a></div>
+                        </div>
+                        
+                        <div class="dropdown-divider"></div>
+                    <% }); %>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" id="userid" userid="<%=currentUser.id%>">Signed In As <%= currentUser.username %></a>
+            </li>
+            <li class="nav-item active">
+                <a href="/logout" class="nav-link">Log out!</a>
+            </li>
+            
+        <% } %>
+    </ul>
+    </div>
+</div>
+</nav>
+<div class="container">
+    <% if(error && error.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+    <% if(success && success.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+    <% } %>
+</div>
