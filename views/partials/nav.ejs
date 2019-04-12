@@ -13,7 +13,7 @@
                 <a href="/register" class="nav-link">Sign up!</a>
             </li>
         <% } else { %>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add friend</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <form class="form-inline my-2 my-lg-0 dropdown-item findfriend">
@@ -22,7 +22,7 @@
                     </form>
                 </div>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending Friend Requests (<span class="friend-invites-length"><%=currentUser.friendinvites.length %></span>)</a>
                 <div class="dropdown-menu friend-invites" aria-labelledby="navbarDropdown">
                     <% currentUser.friendinvites.forEach(function(invite) { %>
@@ -31,22 +31,25 @@
                     <% }); %>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Friends (<span id="friends-length"><%= currentUser.friends.length %></span>)</a>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Friends (<span class="friends-length">0</span> online)</a>
                 <div class="dropdown-menu friends" aria-labelledby="navbarDropdown">
                     <% currentUser.friends.forEach(function(friend) { %>
-                        <div class="dropdown-item">
-                            <a class="hovering" friendId="<%=friend.id%>"><%= friend.username %></a>
-                            <div class="hide buttons mt-2"><a class="btn btn-success invitefriend">Invite</a></div>
-                            <div class="hide buttons mt-2"><a class="btn btn-info" href="/matches/<%= friend.id %>">Match History</a></div>
-                            <div class="hide buttons mt-2"><a class="btn btn-danger removefriend" friendId="<%=friend.id%>">Remove Friend</a></div>
+                        <div class="dropdown-container">
+                            <div class="dropdown-item">
+                                <a class="hovering" friendId="<%=friend.id%>"><%= friend.username %></a>
+                                <div class="hide invbutton mt-2"><a class="btn btn-success invitefriend">Invite</a></div>
+                                <div class="hide buttons mt-2"><a class="btn btn-info" href="/matches/<%= friend.id %>">Match History</a></div>
+                                <div class="hide buttons mt-2"><a class="btn btn-danger removefriend" friendId="<%=friend.id%>">Remove Friend</a></div>
+                            </div>
+                            
+                            <div class="dropdown-divider"></div>
                         </div>
                         
-                        <div class="dropdown-divider"></div>
                     <% }); %>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" id="userid" userid="<%=currentUser.id%>">Signed In As <%= currentUser.username %></a>
             </li>
             <li class="nav-item active">

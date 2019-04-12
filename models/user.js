@@ -11,9 +11,13 @@ var userSchema = new mongoose.Schema({
     friendinvites: [{
         id: String,
         username: String
+    }],
+    matches: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Match'
     }]
 });
 
 userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", userSchema, "users");
+module.exports = mongoose.model("User", userSchema);

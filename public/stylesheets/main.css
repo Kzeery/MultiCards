@@ -37,3 +37,31 @@ body {
 .selected {
     border: 4px solid lightgreen;
 }
+
+.tooltip1 {
+    width: 150px;
+    background-color: beige;
+    text-align: center;
+    border-radius: 8%;
+    opacity: 1 !important;
+    /* Position the tooltip */
+    position: absolute;
+    left: 102%;
+    top: 5px;
+    z-index: 1;
+    text-align: left;
+}
+
+
+.gameover {
+    position: fixed;
+    top: 30%;
+    height: 40%;
+    left: 30%;
+    width: 40%;
+    border-radius: 5%;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.3);
+    text-align: center;
+}

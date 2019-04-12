@@ -6,11 +6,16 @@
     <title>Card Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/index.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/main.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/scripts/index.js"></script>
+    <script src="/scripts/game.js"></script>
 </head>
 <body>
+    <% include partials/nav %>
+
     <div class="game">
         <div class="enemy d-flex align-items-start justify-content-center">
         </div>
@@ -40,8 +45,8 @@
         <div class="you d-flex align-items-end mt-3 justify-content-center">
 
         </div>
+        <button class="btn btn-danger mt-4">End Turn</button>
     </div>
     
-    <script src="/scripts/game.js"></script>
-</body>
-</html>
+    
+    <% include partials/footer %>

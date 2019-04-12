@@ -35,12 +35,15 @@ app.use(function(req, res, next) {
 });
 const server  = http.Server(app),
       io      = socketIO(server),
-      urls    = sockets.makeurls(100);  
+      urls    = [];  
 
 var main = io.of("/");
 var connectedUserSockets = {};
 main.on("connection", function(socket) {
     socket.on("newsocket", function(id) {
+        if(connectedUserSockets[id]) {
+            return socket.emit("alreadyonline")
+        }
         socket.userId = id;
         User.findById(id, function(err, user) {
             if(err) {
@@ -48,6 +51,12 @@ main.on("connection", function(socket) {
             } else {
                 socket.username = user.username;
                 connectedUserSockets[socket.userId] = socket.id;
+                user.friends.forEach(function(friend) {
+                    if(connectedUserSockets[friend.id]) {
+                        socket.emit("useronline", friend.id, friend.username);
+                        socket.broadcast.to(connectedUserSockets[friend.id]).emit("useronline", socket.userId, socket.username);
+                    }
+                });
             }
         });
     });
@@ -104,9 +113,11 @@ main.on("connection", function(socket) {
                         } else {
                             friend.friends.push({id: socket.userId, username: socket.username});
                             friend.save();
-                            socket.emit("acceptrequestresult", {success: "friend added!", friend: friend.username});
+                            socket.emit("acceptrequestresult", {success: "friend added!", friend: {id: friend.id, username: friend.username}});
                             if(connectedUserSockets[data.friend]) {
                                 socket.broadcast.to(connectedUserSockets[data.friend]).emit("acceptedrequest", socket.username, socket.userId);
+                                socket.emit("useronline", friend.id, friend.username)
+                                socket.broadcast.to(connectedUserSockets[data.friend]).emit("useronline", socket.userId, socket.username);
                             }
                         }
                     });
@@ -162,18 +173,44 @@ main.on("connection", function(socket) {
             }
         });
     });
-    socket.on("updateonline", function(id) {
-        if(connectedUserSockets[id]) {
-            socket.emit("useronline", id)
-        }
-    });
     socket.on("invitefriend", function(id) {
+        if(!urls.includes(id + socket.userId)) {
+            var url = "/game/" + urls[urls.push(id + socket.userId) - 1]
+            sockets.socketListener(url, io);
+        } else {
+            var url = "/game/" + id + socket.userId;
+        }
         if(connectedUserSockets[id]) {
-            socket.broadcast.to(connectedUserSockets[id]).emit("invitedtogame", socket.username, socket.userId);
+            socket.broadcast.to(connectedUserSockets[id]).emit("invitedtogame", socket.username, socket.userId, url);
         }
     });
+    socket.on("acceptedinvite", function(id, url) {
+        if(connectedUserSockets[id]) {
+            socket.broadcast.to(connectedUserSockets[id]).emit("redirectgame", url);
+        }
+        setTimeout(function() {
+            var index = urls.indexOf(url);
+            urls.splice(index, 1);
+        }, 5000);
+    });
+    socket.on("declinedinvite", function(id) {
+        if(connectedUserSockets[id]) {
+            socket.broadcast.to(connectedUserSockets[id]).emit("frienddeclined", socket.username);
+        }
+    })
     socket.on("disconnect", function() {
         if(socket.userId) {
+            User.findById(socket.userId, function(err, user) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    user.friends.forEach(function(friend) {
+                        if(connectedUserSockets[friend.id]) {
+                            socket.broadcast.to(connectedUserSockets[friend.id]).emit("useroffline", socket.userId, socket.username);
+                        }
+                    });
+                }
+            });
             delete connectedUserSockets[socket.userId]
         }
     });
@@ -223,17 +260,13 @@ app.get("/matches/:id", function(req, res) {
 
 
 
-
-server.listen(3000, "127.0.0.1", function () {
-    console.log("server has started!");
-});
-for(let x = 0; x < urls.length; x++) {
-    sockets.socketListener("/game/" + urls[x], io);
-}
 app.get("/game/:id", function(req, res) {
     if(urls.includes(req.params.id)) {
         return res.render("game");
     }
-    res.send("bad url!");
-    
+    res.redirect("/");
 });
+
+server.listen(3000, '127.0.0.1', function() {
+    console.log("server has started!");
+})
