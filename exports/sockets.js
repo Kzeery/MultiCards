@@ -76,36 +76,36 @@ function socketListener(url, io) {
                 if (player !== "length" && player !== "play") {
                     players[player].win = true;
                     listener.emit("gameover", players);
-                    var thismatch = {_id: new mongoose.Types.ObjectId(), Score: "A Player Disconnected"}
-                    userIds.forEach(function(id) {
-                        if(id !== socket.userId) {
-                            thismatch.winner = id;
-                        } else {
-                            thismatch.loser = id;
-                        }
-                    });
-                    Match.create(thismatch, function(err, match) {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            userIds.forEach(function(id) {
-                                User.findById(id, function(err, user) {
-                                    if(err) {
-                                        console.log(err)
-                                    } else {
-                                        user.matches.push(match);
-                                        user.save();
-                                    }
-                                })
-                            });
-                        }
-                    });
+                //     var thismatch = {_id: new mongoose.Types.ObjectId(), Score: "A Player Disconnected"}
+                //     userIds.forEach(function(id) {
+                //         if(id !== socket.userId) {
+                //             thismatch.winner = id;
+                //         } else {
+                //             thismatch.loser = id;
+                //         }
+                //     });
+                //     Match.create(thismatch, function(err, match) {
+                //         if(err) {
+                //             console.log(err);
+                //         } else {
+                //             userIds.forEach(function(id) {
+                //                 User.findById(id, function(err, user) {
+                //                     if(err) {
+                //                         console.log(err)
+                //                     } else {
+                //                         user.matches.push(match);
+                //                         user.save();
+                //                     }
+                //                 })
+                //             });
+                //         }
+                //     });
                     
-                    // userIds = [];
-                    // ids = [];
-                    // deck = new objects.Deck();
-                    // deck.shuffle();
-                    // players = { "length": 0, "play": { "1": [], "2": [], "3": [], "4": [] } };
+                    userIds = [];
+                    ids = [];
+                    deck = new objects.Deck();
+                    deck.shuffle();
+                    players = { "length": 0, "play": { "1": [], "2": [], "3": [], "4": [] } };
                 }
             }
             listener.removeAllListeners();

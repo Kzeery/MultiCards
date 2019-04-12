@@ -9,10 +9,12 @@ const sockets       = require("./exports/sockets"),
     passport        = require("passport"), 
     express         = require("express"),
     http            = require("http"),
+    mongoconnect    = process.env.DATABASEURL || "mongodb://localhost/multicards"
     app             = express();
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect("mongodb://localhost/multicards");
+mongoose.connect(mongoconnect);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -267,6 +269,6 @@ app.get("/game/:id", function(req, res) {
     res.redirect("/");
 });
 
-server.listen(3000, '127.0.0.1', function() {
+server.listen(process.env.PORT, process.env.IP, function() {
     console.log("server has started!");
 })
