@@ -102,15 +102,10 @@ function socketListener(url, io) {
                                     user.matches.push(match._id);
                                     user.save();
                                 }
-                            }).then(function() {
-                                if(match.loser && match.winner) {
-                                    if(!saved) {
-                                        match.save();
-                                        saved = true;
-                                    }
-                                    
-                                }
                             });
+                            setTimeout(function() {
+                                match.save();
+                            }, 5000);
                         }
                     }
                 }
@@ -142,15 +137,10 @@ function socketListener(url, io) {
                         user.matches.push(match._id);
                         user.save();
                     }
-                }).then(function() {
-                    if(match.loser && match.winner) {
-                        if(!saved) {
-                            match.save();
-                            saved = true;
-                        }
-                        
-                    }
                 });
+                setTimeout(function() {
+                    match.save();
+                }, 5000)
             }
             listener.removeAllListeners();
         });

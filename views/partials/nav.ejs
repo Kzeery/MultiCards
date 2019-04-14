@@ -14,7 +14,7 @@
             </li>
         <% } else { %>
             <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add friend</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Friend</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <form class="form-inline my-2 my-lg-0 dropdown-item findfriend">
                         <input class="form-control mx-1" type="text" name="findfriend" placeholder="username" aria-label="addfriend">
@@ -53,7 +53,7 @@
                 <a class="nav-link active" id="userid" userid="<%=currentUser.id%>" href="/matches/<%=currentUser.id%>">Signed In As: <%= currentUser.username %></a>
             </li>
             <li class="nav-item active">
-                <a href="/logout" class="nav-link">Log out!</a>
+                <a href="/logout" class="nav-link">Log Out</a>
             </li>
             
         <% } %>
