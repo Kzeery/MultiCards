@@ -288,6 +288,6 @@ app.get("/game/:id", function(req, res) {
     res.redirect("/");
 });
 
-server.listen(port, ip, function() {
+server.listen(process.env.PORT, process.env.IP, function() {
     console.log("server has started!");
-})
+});
