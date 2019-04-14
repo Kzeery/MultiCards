@@ -15,6 +15,7 @@ $(function() {
         }
     });
     socket.on("fullgame", function() {
+        socket.removeAllListeners();
         return $("body").html('<div class="container mt-5"><div><h1>This is not your game. You cannot join it. </h1></div><div><a class="btn btn-danger" href="/">Back</a></div>');
     });
     function drawCard(url, classname = null, value = null, append = true) {
@@ -212,7 +213,7 @@ $(function() {
                                 if (players[socket.id]["discard"][$(".selected").index()].length === 0) {
                                     $(".selected").replaceWith("<span class='no-card you-discard'></span>");
                                 } else {
-                                    $(".selected").replaceWith("<span class='card you-discard' style='background-image: url(" + players[socket.id]["discard"][$(".selected").index()][0].url + ");' num='" + players[socket.id]["discard"][$(".selected").index()][0].value + "'></span>");
+                                    $(".selected").replaceWith("<span class='card you-discard' style='background-image: url(" + players[socket.id]["discard"][$(".selected").index()][players[socket.id]["discard"][$(".selected").index()].length - 1].url + ");' num='" + players[socket.id]["discard"][$(".selected").index()][players[socket.id]["discard"][$(".selected").index()].length - 1].value + "'></span>");
                                 }
                                 socket.emit("change", { "play": $(".play").html(), "en-disc": $(".you-disc").html(), "id": socket.id, "hand": false, "players": players });
                             } else {

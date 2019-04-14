@@ -13,6 +13,41 @@
 </head>
 <body>
     <% include partials/nav %>
-
-    
+    <div class="container mt-2">
+        <div class="custom-container2 mt-0">
+            <h3>
+                <%= user.username %> &emsp;<% if(!isFriend && currentUser && currentUser.id != user._id) { %> 
+                <button class="btn btn-success btn-sm" id="addfriend" username="<%=user.username%>">Add Friend</button>
+                <% } %>
+            </h3>
+            <h5>Games Played: <span class="games"><%= user.wins + user.losses %></span></h5>
+            <h5>Wins: <span class="wins"><%= user.wins %></span> losses: <span class="losses"><%= user.losses %></span></h5>
+        </div>
+    </div>
+    <div class="container text-center mt-4">
+        <ul class="list-group ">
+            <% user.matches.forEach(function(match) { %>
+                <li class="list-group-item mt-2 <% if(match.winner == user.username) { %>victory-bg <% } else { %>defeat-bg<% }%>">
+                    <h1>
+                        <% if(match.winner == user.username) { %> 
+                            Victory!
+                        <% } else  { %> 
+                            Defeat!
+                        <% }%>
+                    </h1>
+                    <h2><%= match.winner %> vs. <%= match.loser %></h2>
+                    <div class="row ">
+                        <div class="col-sm-6 text-left">
+                            <h4>Score: <%= match.score %></h4> 
+                        </div>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3 text-right">
+                            <h4>Length: <%= match.length %></h4>
+                        </div>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+        
+    </div>
     <% include partials/footer %>

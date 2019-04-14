@@ -9,7 +9,9 @@ const sockets       = require("./exports/sockets"),
     passport        = require("passport"), 
     express         = require("express"),
     http            = require("http"),
-    mongoconnect    = process.env.DATABASEURL || "mongodb://localhost/multicards"
+    mongoconnect    = process.env.DATABASEURL || "mongodb://localhost/multicards",
+    port            = process.env.PORT || 3000,
+    ip              = process.env.IP || '127.0.0.1',
     app             = express();
 
 mongoose.set('useNewUrlParser', true);
@@ -69,7 +71,7 @@ main.on("connection", function(socket) {
             } else {
                 if(foundfriend && foundfriend.username !== socket.username) {
                     var requested = foundfriend.friendinvites.some(function(friendinvite) {
-                        return friendinvite == socket.userId;
+                        return friendinvite.id == socket.userId;
                     });
                     var friendlist = foundfriend.friends.some(function(friend) {
                         return friend.id == socket.userId;
@@ -257,8 +259,25 @@ app.get("/logout", function(req, res) {
 });
 
 app.get("/matches/:id", function(req, res) {
-    res.render("matches");
-})
+    User.findById(req.params.id).populate("matches").exec(function(err, user) {
+        if(err || !user) {
+            req.flash("error", "No user with that ID found!");
+            return res.redirect("/");
+        }
+        var isFriend = false;
+        if(req.user) {
+            user.friends.forEach(function(friend) {
+                if(friend.id == req.user.id) {
+                    isFriend = true;
+                }
+            });
+        }
+        setTimeout(function() {
+            res.render("matches", {user: user, isFriend: isFriend});
+        }, 100)
+    });
+    
+});
 
 
 
@@ -269,6 +288,6 @@ app.get("/game/:id", function(req, res) {
     res.redirect("/");
 });
 
-server.listen(process.env.PORT, process.env.IP, function() {
+server.listen(port, ip, function() {
     console.log("server has started!");
 })

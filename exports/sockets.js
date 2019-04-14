@@ -1,6 +1,7 @@
 const objects = require("../classes/deck"),
 User            = require("../models/user"),
 Match           = require("../models/match"),
+convertToTime   = require("./date");
 mongoose        = require("mongoose");
 
 
@@ -11,10 +12,16 @@ function socketListener(url, io) {
     var ids = [];
     var deck = new objects.Deck();
     deck.shuffle();
+    var starttime;
+    var win = false;
     listener.on('connection', function (socket) {
         if(players.length > 1) {
             socket.emit("fullgame");
+            socket.notAllowed = true;
         } else {
+            if(!starttime) {
+                starttime = Date.now();
+            }
             var hand = deck.deal(5);
             var goal = deck.deal(15);
             players[socket.id] = {
@@ -33,15 +40,17 @@ function socketListener(url, io) {
             }
         }
         socket.on("newsocket", function(id) {
-            socket.userId = id;
-            userIds.push(id);
-            User.findById(id, function(err, user) {
-                if(err) {
-                    console.log(err);
-                } else {
-                    socket.username = user.username;
-                }
-            });
+            if(!socket.notAllowed) {
+                socket.userId = id;
+                userIds.push(id);
+                User.findById(id, function(err, user) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        socket.username = user.username;
+                    }
+                });
+            }
         });
         socket.on("change", function (data) {
             players = data["players"];
@@ -66,46 +75,44 @@ function socketListener(url, io) {
             }
             listener.emit("deal", players);
             listener.emit("startturn", players);
-    
         });
         socket.on("disconnect", function() {
             if(players[socket.id]) {
                 delete players[socket.id];
             }
-            for (player in players) {
-                if (player !== "length" && player !== "play") {
-                    players[player].win = true;
-                    listener.emit("gameover", players);
-                //     var thismatch = {_id: new mongoose.Types.ObjectId(), Score: "A Player Disconnected"}
-                //     userIds.forEach(function(id) {
-                //         if(id !== socket.userId) {
-                //             thismatch.winner = id;
-                //         } else {
-                //             thismatch.loser = id;
-                //         }
-                //     });
-                //     Match.create(thismatch, function(err, match) {
-                //         if(err) {
-                //             console.log(err);
-                //         } else {
-                //             userIds.forEach(function(id) {
-                //                 User.findById(id, function(err, user) {
-                //                     if(err) {
-                //                         console.log(err)
-                //                     } else {
-                //                         user.matches.push(match);
-                //                         user.save();
-                //                     }
-                //                 })
-                //             });
-                //         }
-                //     });
-                    
-                    userIds = [];
-                    ids = [];
-                    deck = new objects.Deck();
-                    deck.shuffle();
-                    players = { "length": 0, "play": { "1": [], "2": [], "3": [], "4": [] } };
+            if(!win && !socket.notAllowed) {
+                for (player in players) {
+                    if (player !== "length" && player !== "play") {
+                        players[player].win = true;
+                        listener.emit("gameover", players);
+                        var match = new Match({score: "A Player Disconnected", length: convertToTime(starttime, Date.now())});
+                        var saved  = false;
+                        for(let x = 0; x < userIds.length; x++) {
+                            User.findById(userIds[x], function(err, user) {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    if(user._id != socket.userId) {
+                                        match.winner = user.username;
+                                        user.wins += 1;
+                                    } else {
+                                        match.loser = user.username;
+                                        user.losses += 1;
+                                    }
+                                    user.matches.push(match._id);
+                                    user.save();
+                                }
+                            }).then(function() {
+                                if(match.loser && match.winner) {
+                                    if(!saved) {
+                                        match.save();
+                                        saved = true;
+                                    }
+                                    
+                                }
+                            });
+                        }
+                    }
                 }
             }
             listener.removeAllListeners();
@@ -113,10 +120,38 @@ function socketListener(url, io) {
         socket.on("win", function() {
             players[socket.id].win = true;
             listener.emit("gameover", players);
-            ids = [];
-            deck = new objects.Deck();
-            deck.shuffle();
-            players = { "length": 0, "play": { "1": [], "2": [], "3": [], "4": [] } };
+            var match = new Match({length: convertToTime(starttime, Date.now())});
+            ids.forEach(function(id) {
+                if(id != socket.id) {
+                    match.score = "15 - " +  String(15 - players[socket.id]["hand"].length)
+                }
+            });
+            var saved  = false;
+            for(let x = 0; x < userIds.length; x++) {
+                User.findById(userIds[x], function(err, user) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        if(user._id == socket.userId) {
+                            match.winner = user.username;
+                            user.wins += 1;
+                        } else {
+                            match.loser = user.username;
+                            user.losses += 1;
+                        }
+                        user.matches.push(match._id);
+                        user.save();
+                    }
+                }).then(function() {
+                    if(match.loser && match.winner) {
+                        if(!saved) {
+                            match.save();
+                            saved = true;
+                        }
+                        
+                    }
+                });
+            }
             listener.removeAllListeners();
         });
     

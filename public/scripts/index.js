@@ -24,7 +24,7 @@ $(function() {
     });
     socket.on("alreadyonline", function() {
         $("body").html('<div class="container mt-5"><div><h1>You are already logged in somewhere else! You can only be logged in at one location at a time.</h1></div><div><a class="btn btn-danger" href="/logout">Logout</a></div>')
-    })
+    });
     socket.on("useronline", function(id, username) {
         $(".hovering").each(function() {
             if($(this).attr("friendId") == id) {
@@ -69,7 +69,8 @@ $(function() {
     socket.on("acceptedrequest", function(username, id) {
         notify(username + " has accepted your friend request!");
         var str = '<div class="dropdown-container"><div class="dropdown-item"><a class="hovering" friendId="'+ id + '">'+ username + '</a><div class="hide invbutton mt-2"><a class="btn btn-success invitefriend">Invite</a></div><div class="hide buttons mt-2"><a class="btn btn-info" href="/matches/'+ id + '">Match History</a></div><div class="hide buttons mt-2"><a class="btn btn-danger removefriend" friendId="' + id + '">Remove Friend</a></div></div><div class="dropdown-divider"></div></div>'
-        $(".friends").append(str); 
+        $(".friends").append(str);
+        $("#addfriend").remove(); 
     });
 
     socket.on("newfriendrequest", function(username, id) {
@@ -93,6 +94,11 @@ $(function() {
         setTimeout(function() {
             el.addClass("tn-box-active");
         }, 300);
+        setTimeout(function() {
+            socket.emit("declinedinvite", id);
+            el.remove();
+            notify("Your game invite from " + username + " has expired!");
+        }, 60000);
     });
     socket.on("deletedfriend", function(username, id) {
         $(".hovering").each(function() {
@@ -105,6 +111,7 @@ $(function() {
     });
     socket.on("frienddeclined", function(username) {
         notify(username + " has declined your game invite.");
+        delete socket.invited;
     });
     socket.on("redirectgame", function(url) {
         window.location.href = url;
@@ -162,9 +169,24 @@ $(function() {
     });
     $(".friends").on('click', ".dropdown-item .invitefriend",function() {
         if($(this).parent().prev().hasClass("online")) {
-            var friendId = $(this).parent().prev().attr("friendId");
-            socket.emit("invitefriend", friendId);
+            if(!socket.invited) {
+                var friendId = $(this).parent().prev().attr("friendId");
+                notify("Invited " + $(this).parent().prev().text() + " to a game of cards! Waiting on their response.");
+                socket.emit("invitefriend", friendId);
+                socket.invited = true;
+            } else{
+                notify("You have already invited someone to a game. Please wait for a response before inviting someone else!");
+            }
+        } else {
+            notify("This user is not online right now.");
         }
+    });
+    $("#addfriend").on('click', function() {
+        username = $(this).attr("username");
+        $(this).addClass("disabled");
+        $(this).text("Requested");
+        $(this).off();
+        socket.emit("findfriend", username);
     });
 });
 

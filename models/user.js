@@ -15,7 +15,9 @@ var userSchema = new mongoose.Schema({
     matches: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Match'
-    }]
+    }],
+    losses: {type: Number, default: 0},
+    wins: {type: Number, default: 0}
 });
 
 userSchema.plugin(passportLocalMongoose);

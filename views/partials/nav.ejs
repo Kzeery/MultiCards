@@ -50,7 +50,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="userid" userid="<%=currentUser.id%>">Signed In As <%= currentUser.username %></a>
+                <a class="nav-link active" id="userid" userid="<%=currentUser.id%>" href="/matches/<%=currentUser.id%>">Signed In As: <%= currentUser.username %></a>
             </li>
             <li class="nav-item active">
                 <a href="/logout" class="nav-link">Log out!</a>
