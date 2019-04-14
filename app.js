@@ -1,3 +1,5 @@
+//TOFIX: CAPITALIZE LOSSES IN MATCHES SHOW. ADD THE DATE TO EACH MATCH.
+
 const sockets       = require("./exports/sockets"),
     session         = require("express-session"),
     LocalStrategy   = require("passport-local"),
@@ -9,14 +11,12 @@ const sockets       = require("./exports/sockets"),
     passport        = require("passport"), 
     express         = require("express"),
     http            = require("http"),
-    mongoconnect    = process.env.DATABASEURL || "mongodb://localhost/multicards",
-    port            = process.env.PORT || 3000,
-    ip              = process.env.IP || '127.0.0.1',
     app             = express();
+    require('dotenv').config();
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect(mongoconnect);
+mongoose.connect(process.env.DATABASEURL);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));

@@ -86,7 +86,6 @@ function socketListener(url, io) {
                         players[player].win = true;
                         listener.emit("gameover", players);
                         var match = new Match({score: "A Player Disconnected", length: convertToTime(starttime, Date.now())});
-                        var saved  = false;
                         for(let x = 0; x < userIds.length; x++) {
                             User.findById(userIds[x], function(err, user) {
                                 if(err) {
@@ -103,11 +102,11 @@ function socketListener(url, io) {
                                     user.save();
                                 }
                             });
-                            setTimeout(function() {
-                                match.save();
-                                listener.removeAllListeners();
-                            }, 5000);
                         }
+                        setTimeout(function() {
+                            match.save();
+                            listener.removeAllListeners();
+                        }, 5000);
                     }
                 }
             }

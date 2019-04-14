@@ -26,7 +26,7 @@
     </div>
     <div class="container text-center mt-4">
         <ul class="list-group ">
-            <% user.matches.forEach(function(match) { %>
+            <% user.matches.reverse().forEach(function(match) { %>
                 <li class="list-group-item mt-2 <% if(match.winner == user.username) { %>victory-bg <% } else { %>defeat-bg<% }%>">
                     <h1>
                         <% if(match.winner == user.username) { %> 
