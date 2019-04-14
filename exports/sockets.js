@@ -105,12 +105,12 @@ function socketListener(url, io) {
                             });
                             setTimeout(function() {
                                 match.save();
+                                listener.removeAllListeners();
                             }, 5000);
                         }
                     }
                 }
             }
-            listener.removeAllListeners();
         });
         socket.on("win", function() {
             players[socket.id].win = true;
@@ -140,9 +140,9 @@ function socketListener(url, io) {
                 });
                 setTimeout(function() {
                     match.save();
+                    listener.removeAllListeners();
                 }, 5000)
             }
-            listener.removeAllListeners();
         });
     
     });
