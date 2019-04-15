@@ -1,9 +1,8 @@
 const objects = require("../classes/deck"),
 User            = require("../models/user"),
 Match           = require("../models/match"),
-convertToTime   = require("./date");
-mongoose        = require("mongoose");
-
+convertToTime   = require("./date"),
+dateFormat      = require("dateformat");
 
 function socketListener(url, io) {
     var listener = io.of(url);
@@ -14,6 +13,7 @@ function socketListener(url, io) {
     deck.shuffle();
     var starttime;
     var win = false;
+    var now;
     listener.on('connection', function (socket) {
         if(players.length > 1) {
             socket.emit("fullgame");
@@ -21,6 +21,8 @@ function socketListener(url, io) {
         } else {
             if(!starttime) {
                 starttime = Date.now();
+                now = new Date();
+                now = dateFormat(now, "mmmm dS, yyyy, h:MM:ss TT");
             }
             var hand = deck.deal(5);
             var goal = deck.deal(15);
@@ -85,7 +87,7 @@ function socketListener(url, io) {
                     if (player !== "length" && player !== "play") {
                         players[player].win = true;
                         listener.emit("gameover", players);
-                        var match = new Match({score: "A Player Disconnected", length: convertToTime(starttime, Date.now())});
+                        var match = new Match({score: "A Player Disconnected", date: now, length: convertToTime(starttime, Date.now())});
                         for(let x = 0; x < userIds.length; x++) {
                             User.findById(userIds[x], function(err, user) {
                                 if(err) {
@@ -114,7 +116,7 @@ function socketListener(url, io) {
         socket.on("win", function() {
             players[socket.id].win = true;
             listener.emit("gameover", players);
-            var match = new Match({length: convertToTime(starttime, Date.now())});
+            var match = new Match({length: convertToTime(starttime, Date.now()), date: now});
             ids.forEach(function(id) {
                 if(id != socket.id) {
                     match.score = "15 - " +  String(15 - players[socket.id]["hand"].length)
@@ -147,4 +149,4 @@ function socketListener(url, io) {
     });
 }
 
-module.exports = {socketListener};
+module.exports = socketListener;

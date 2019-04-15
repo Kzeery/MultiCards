@@ -21,13 +21,14 @@
                 <% } %>
             </h3>
             <h5>Games Played: <span class="games"><%= user.wins + user.losses %></span></h5>
-            <h5>Wins: <span class="wins"><%= user.wins %></span> losses: <span class="losses"><%= user.losses %></span></h5>
+            <h5>Wins: <span class="wins"><%= user.wins %></span> Losses: <span class="losses"><%= user.losses %></span></h5>
         </div>
     </div>
     <div class="container text-center mt-4">
         <ul class="list-group ">
             <% user.matches.reverse().forEach(function(match) { %>
-                <li class="list-group-item mt-2 <% if(match.winner == user.username) { %>victory-bg <% } else { %>defeat-bg<% }%>">
+                <li class="list-group-item2 mt-2 <% if(match.winner == user.username) { %>victory-bg <% } else { %>defeat-bg<% }%>">
+                    <p class="text-right"><%= match.date %></p>
                     <h1>
                         <% if(match.winner == user.username) { %> 
                             Victory!
