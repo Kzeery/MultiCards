@@ -1,5 +1,7 @@
-const mainSocketListener = require("./exports/mainsocket"),     
+// FIX TIME
+const mainSocketListener = require("./exports/mainsocket"),
       session            = require("express-session"),
+      MongoDBStore       = require("connect-mongodb-session")(session),
       LocalStrategy      = require("passport-local"),
       flash              = require("connect-flash"),
       User               = require("./models/user"),
@@ -14,6 +16,13 @@ const mainSocketListener = require("./exports/mainsocket"),
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
+var store = new MongoDBStore({
+    uri: process.env.DATABASEURL,
+    collection: 'mySessions'
+});
+store.on('error', function(err) {
+    console.log(err);
+});
 mongoose.connect(process.env.DATABASEURL);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -21,8 +30,12 @@ app.use(express.static(__dirname + "/public"));
 app.use(flash());
 app.use(session({
     secret: process.env.SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
+    store: store
 }));
 app.use(passport.initialize());
 app.use(passport.session());
