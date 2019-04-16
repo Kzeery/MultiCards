@@ -3,11 +3,12 @@ body {
 }
 .game {
     text-align: center;
+    margin-top: 2rem;
     
 }
 .card {
-    width: 100px;
-    height: 148px;
+    width: 10vh;
+    height: 14.8vh;
     display: inline-block;
     background-position: center center;
     background-size: cover;
@@ -17,18 +18,18 @@ body {
     border-radius: 4%;
 }
 .deck {
-    height: 148px;
+    height: 14.8vh;
     border-radius: 3%;
     display: inline-block;
     background-position: center center;
     background-size: cover;
-    width: 171px;
+    width: 17.05vh;
     background-image: url("../cards/deck.jpg");
 }
 
 .no-card {
-    width: 100px;
-    height: 148px;
+    width: 10vh;
+    height: 14.8vh;
     border: 2px dashed black;
     border-radius: 5%;
     margin-right: 5px;
@@ -66,4 +67,5 @@ body {
     text-align: center;
     min-height: 30em;
     width: 90%;
+    max-width: 750px;
 }

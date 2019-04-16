@@ -45,6 +45,12 @@ mainSocketListener(io, urls);
 app.get("/", function (req, res) {
     res.render("index");
 });
+app.get("/howtoplay", function(req, res) {
+    res.render("howToPlay");
+});
+app.get("/about", function(req, res) {
+    res.render("about");
+})
 app.get("/register", function(req, res) {
     res.render("register");
 });
@@ -54,7 +60,6 @@ app.post("/register", function(req, res) {
     User.register(newUser, req.body.password, function(err, user) {
         if(err) {
             req.flash("error", err.message);
-            console.log(err);
             return res.redirect("/");
         }
         passport.authenticate("local")(req, res, function() {

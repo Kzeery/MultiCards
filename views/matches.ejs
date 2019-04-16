@@ -15,11 +15,12 @@
     <% include partials/nav %>
     <div class="container mt-2">
         <div class="custom-container2 mt-0">
-            <h3>
-                <%= user.username %> &emsp;<% if(!isFriend && currentUser && currentUser.id != user._id) { %> 
-                <button class="btn btn-success btn-sm" id="addfriend" username="<%=user.username%>">Add Friend</button>
-                <% } %>
+            <h3 class="display-4">
+                <%= user.username %> 
             </h3>
+            <% if(!isFriend && currentUser && currentUser.id != user._id) { %> 
+                <button class="btn btn-success btn-sm" id="addfriend" username="<%=user.username%>">Add Friend</button>
+            <% } %>
             <h5>Games Played: <span class="games"><%= user.wins + user.losses %></span></h5>
             <h5>Wins: <span class="wins"><%= user.wins %></span> Losses: <span class="losses"><%= user.losses %></span></h5>
         </div>

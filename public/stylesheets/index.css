@@ -8,14 +8,34 @@ body {
 .custom-container {
     background-color: #fff;
     box-shadow: 0 2px 10px 0 rgba(0,0,0,.3);
-    height: 400px;
-    width: 300px;
-    margin-top: 12%;
+    position: relative;
+    margin-top: 5%;
+    border-radius: 5%;
+    min-height: 30em;
+    width: 90%;
+    max-width: 500px;
     text-align: center;
 }
+.custom-container3 {
+    background-color: #fff;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.3);
+    height: 100%;
+    width: 80%;
+    max-width: 100%;
+    padding-bottom: 5vh;
+    margin-bottom: 5vh;
+    margin-top: 5vh;
+    text-align: center;
+}
+.index h1, #card-game {
+    color: #138496;
+}
+
 .my-btn {
-    margin-top: 80px;
-    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 .a1 {
     display: inline-block;
@@ -77,18 +97,6 @@ body {
     height: 35px;
 }
 
-.gameover {
-    position: fixed;
-    top: 30%;
-    height: 40%;
-    left: 30%;
-    width: 40%;
-    border-radius: 5%;
-    z-index: 1;
-    background-color: white;
-    box-shadow: 0 2px 10px 0 rgba(0,0,0,.3);
-    text-align: center;
-}
 
 .victory-bg {
     background-color: lightgreen;
@@ -101,6 +109,7 @@ body {
     box-shadow: 0 2px 10px 0 rgba(0,0,0,.3);
     width: 30%;
     padding: 5px 5px;
+    min-width: 210px;
 }
 .wins {
     color: lightgreen;
@@ -119,4 +128,30 @@ body {
     margin-bottom: -1px;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.75rem;
+}
+.list-group-item.list-group-item-action {
+    display: inline-block !important;
+}
+#list-tab.list-group {
+    flex-direction: row;
+}
+.media-body {
+    min-width: 40vw;
+}
+ol.list-group {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 40vh;
+    overflow: scroll;
+}
+.row .list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-top-right-radius: .25rem;
+    margin-bottom: -1px;
+}
+.row .list-group-item:first-child {
+    border-bottom-left-radius: .25rem;
+    border-top-right-radius: 0;
+    margin-bottom: -1px;
 }

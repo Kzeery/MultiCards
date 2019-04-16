@@ -108,12 +108,13 @@ function socketListener(url, io) {
                         setTimeout(function() {
                             match.save();
                             listener.removeAllListeners();
-                        }, 5000);
+                        }, 2000);
                     }
                 }
             }
         });
         socket.on("win", function() {
+            win = true;
             players[socket.id].win = true;
             listener.emit("gameover", players);
             var match = new Match({length: convertToTime(starttime, Date.now()), date: now});
@@ -122,7 +123,6 @@ function socketListener(url, io) {
                     match.score = "15 - " +  String(15 - players[socket.id]["hand"].length)
                 }
             });
-            var saved  = false;
             for(let x = 0; x < userIds.length; x++) {
                 User.findById(userIds[x], function(err, user) {
                     if(err) {
@@ -142,7 +142,7 @@ function socketListener(url, io) {
                 setTimeout(function() {
                     match.save();
                     listener.removeAllListeners();
-                }, 5000)
+                }, 2000)
             }
         });
     
