@@ -46,7 +46,7 @@ app.get("/", function (req, res) {
     res.render("index");
 });
 app.get("/howtoplay", function(req, res) {
-    res.render("howToPlay");
+    res.render("howtoplay");
 });
 app.get("/about", function(req, res) {
     res.render("about");
