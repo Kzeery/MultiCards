@@ -26,7 +26,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending Friend Requests (<span class="friend-invites-length"><%=currentUser.friendinvites.length %></span>)</a>
                 <div class="dropdown-menu friend-invites" aria-labelledby="navbarDropdown">
                     <% currentUser.friendinvites.forEach(function(invite) { %>
-                        <div class="dropdown-item invite"><%=invite.username%> <button class="btn btn-success btn-sm ml-4 friend-request" friend="<%=invite.id%>">✓</button><button class="btn btn-sm btn-danger ml-1 friend-request" friend="<%=invite.id%>">X</button></div>
+                        <div class="dropdown-item invite"><%=invite.username%> <button class="btn btn-success btn-sm ml-4 friend-request" friendId="<%=invite.id%>">✓</button><button class="btn btn-sm btn-danger ml-1 friend-request" friend="<%=invite.id%>">X</button></div>
                         <div class="dropdown-divider invite"></div>
                     <% }); %>
                 </div>

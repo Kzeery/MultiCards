@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>How to Play</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/index.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/scripts/index.js"></script>
+<% include partials/header %>
 </head>
 <body>
     <% include partials/nav %>
@@ -30,16 +19,18 @@
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane show fade active" id="list-playing-field" role="tabpanel" aria-labelledby="list-playing-field-list">
                 <div class="media mt-5">
-                    <img class="mr-3 align-self-center" src="/diagrams/thefield.jpg" alt="Generic placeholder image">
+                    <div class="w-50 align-self-center">
+                        <img class="mr-3 img-fluid" src="/diagrams/thefield.jpg" alt="Generic placeholder image">
+                    </div>
                     <div class="media-body">
                         <h1>The Playing Field</h1>
                         <ol class="list-group text-left mt-5">
                             <li class="list-group-item list-group-item-primary">1. The opponent's hand. You cannot see the cards that the opponent has in their hand but you can see how many cards they have left. At the beginning of a player's turn, they will be dealt cards until they have five cards in their hand.</li>
-                            <li class="list-group-item">2. The oppponent's goal deck. You can only see the top card of your own and your opponent's goal deck. Each player starts with 15 goal cards at the beginning of the deck. Hover over your own or your opponent's goal deck to see how many cards are left. More about the goal deck can be found in "The Goal" section.</li>
+                            <li class="list-group-item">2. The opponent's goal deck. You can only see the top card of your own and your opponent's goal deck. Each player starts with 15 goal cards at the beginning of the deck. Hover over your own or your opponent's goal deck to see how many cards are left. More about the goal deck can be found in "The Goal" section.</li>
                             <li class="list-group-item list-group-item-primary">3. The opponent's discard piles. Each player has four discard piles that they can play from or into. If there is a card in a discard pile, you can see the top card. Hovering over a card in an opponent's or your own discard pile will show you what cards are in the pile. More on the discard piles can be found in the "Discarding" section.</li>
                             <li class="list-group-item">4. The deck. The deck starts off with 162 cards - 12 of each card from 1-12 and 18 "Pass" cards - and automatically shuffles itself when empty. Each card has the value shown on it, and "Pass" cards can take on any value you decide. The deck image contains no functionality when actually playing the game.</li>
                             <li class="list-group-item list-group-item-primary">5. The playing piles. On their turn, either player can play cards from their hand, their discard piles, or their goal piles into one of the playing four playing piles. Hover over a playing pile to see the value of the top card. More about how to play can be found in the "A Turn" section.</li>
-                            <li class="list-group-item">3. Your discard piles. Each player has four discard piles that they can play from or into. If there is a card in a discard pile, you can see the top card. Hovering over a card in an opponent's or your own discard pile will show you what cards are in the pile. More on the discard piles can be found in the "Discarding" section.</li>
+                            <li class="list-group-item">6. Your discard piles. Each player has four discard piles that they can play from or into. If there is a card in a discard pile, you can see the top card. Hovering over a card in an opponent's or your own discard pile will show you what cards are in the pile. More on the discard piles can be found in the "Discarding" section.</li>
                             <li class="list-group-item list-group-item-primary">7. Your hand. At the beginning of a player's turn, they will be dealt cards until they have five cards in their hand.</li>
                             <li class="list-group-item">8. Your goal deck. You can only see the top card of your own and your opponent's goal deck. Each player starts with 15 goal cards at the beginning of the deck. Hover over your own or your opponent's goal deck to see how many cards are left. More about the goal deck can be found in "The Goal" section.</li>
 
@@ -50,7 +41,7 @@
             <div class="tab-pane fade" id="list-turn" role="tabpanel" aria-labelledby="list-turn-list">
                 <h1 class="mt-5">A Turn</h1>
                 <section class="text-left mx-5">
-                    <h4>Turn Start</h4>
+                    <h4>Start Turn</h4>
                     <p>When your turn begins, you will be dealt new cards until you have five cards in your hand. During your turn you can play cards from your hand, your discard pile, or your goal deck. Unless you have no cards left in your hand, you must discard a card into a discard pile before you can end your turn.</p>
                 </section>
                 <section class="text-left mx-5">
@@ -70,7 +61,7 @@
                     <p>When a game starts, each player will be given 15 cards in their goal deck. The objective of the game is to play all 15 cards of the goal deck before your opponent does. You can only see the top card in your own and your opponent's goal deck but you can play as many cards as you like from your goal deck on each turn. When you play a card from the goal deck, the next card shows for you to play it.</p>
                 </section>
                 <section class="text-left mx-5">
-                    <h4>The importance of the Goal</h4>
+                    <h4>The Importance of the Goal</h4>
                     <p>Many new players fail to realize that their goal deck is the most important place to play from. Usually, you want to avoid helping your opponent play their goal card while trying to play your own. Many players get caught up with playing the cards they have in their hand while disregarding the goal pile. Usually, you'll want to play from your goal pile first before playing from your hand or discard piles if you can, such that you can see the next card in your goal deck and play around it.</p>
                 </section>
             </div>
@@ -79,7 +70,7 @@
                 <section class="text-left mx-5">
                     <h4>Some Tips About Your Hand</h4>
                     <p>"Pass" cards are what will help you out more than anything. You'll want to make sure that when you get them in your hand, you use them effectively because they can be played as any card. You want to make sure that you're either using your "Pass" card to play from your goal deck on that turn or stop your opponent from playing their goal card by playing the value yourself. </p>
-                    <p>Your hand is the only information that is hidden from your opponent. When discarding cards, it may be a better idea to discard cards that are not useful or your opponent can already in order to hide the useful cards you do have.</p>
+                    <p>Your hand is the only information that is hidden from your opponent. When discarding cards, it may be a better idea to discard cards that are not useful or cards your opponent can already see in order to hide the useful cards you do have.</p>
                     <p>It is a good idea to strategize what to play and when to play it. Playing cards that are not currently useful to you is good because it means that you will get more new cards in your hand on the next turn. However, it may be harmful to do so if playing those cards brings your opponent closer to playing their current goal card.</p>
                 </section>
             </div>
@@ -97,7 +88,7 @@
                     <h4>Tips About Discarding</h4>
                     <p>The name "discarding" can be misleading because it makes it seem like cards you discard are immediately useless, but that is not the case. Cards you discard are always playable and are always useful to you.</p>
                     <p>You only have four discard piles. It may seem like plenty to begin with but it is very limited. You want to make sure all your discard piles are playable which means discarding cards strategically. 
-                        Discarding an 11 over a 6, for example, can be harmful if you need the 6 below it but cannot use it because there is an 11 blocking it that you cannot play. Ideally, there are 2 ways that you will want to discard your cards. Firstly, discard cards with the same value on top of eachother; some games you get unlucky and end up with 5 12s by turn 3. It happens. But if you discard them all into the same pile, you are not blocking anything that you would potentially want to play. Secondly, you want to discard cards in decreasing order such that you can play them in order. If I have a hand of 4,5,3,6,11 in my hand and I need to discard something, it is a good idea to discard the 6 first, then the 5 on top of that, then the 4, then the 3. That way, when a 2 is played in a playing pile, I can play the 3, then the 4 under, then the 5, and lastly the 6. If you discard random cards on top of eachother, many will become inaccessible when you need them. </p>
+                        Discarding an 11 over a 6, for example, can be harmful if you need the 6 below it but cannot use it because there is an 11 blocking it that you cannot play. Ideally, there are 2 ways that you will want to discard your cards. Firstly, discard cards with the same value on top of eachother; some games you get unlucky and end up with 5 12s by turn 3. It happens, but if you discard them all into the same pile, you are not blocking anything that you would potentially want to play. Secondly, you want to discard cards in decreasing order such that you can play them in order. If I have a hand of 4,5,3,6,11 in my hand and I need to discard something, it is a good idea to discard the 6 first, then the 5 on top of that, then the 4, then the 3. That way, when a 2 is played in a playing pile, I can play the 3, then the 4 under, then the 5, and lastly the 6. If you discard random cards on top of eachother, many will become inaccessible when you need them. </p>
                 </section>
             </div>
             <div class="tab-pane fade" id="list-getting-started" role="tabpanel" aria-labelledby="list-getting-started-list">
@@ -112,7 +103,7 @@
                 </section>
                 <section class="text-left mx-5">
                     <h4>Make Sure Your Friend is Online</h4>
-                    <p>Your friend will need to be online in order to play with you. To check your online friends, click on the "Friends" button. It tells you how many friends you have online, and shows a dropdown list of all your friends with the online ones highlited in green.</p>
+                    <p>Your friend will need to be online in order to play with you. To check your online friends, click on the "Friends" button. It tells you how many friends you have online, and shows a dropdown list of all your friends with the online ones highlighted in green.</p>
                 </section>
                 <section class="text-left mx-5">
                     <h4>Invite Your Friend</h4>

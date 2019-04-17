@@ -1,3 +1,4 @@
+// This function is just for converting time values from miliseconds since 1970 to hours : minutes : seconds for the match history page. It is used in the sockets.js file.
 function convertToTime(t1, t2) {
     var elapsed = t2 - t1
     var hours = Math.floor(elapsed / 3600000);
