@@ -166,7 +166,7 @@ function socketListener(url, io) {
             // Create the score for the match. It is always going to be "15 - {the other users amount of cards}"
             ids.forEach(function(id) {
                 if(id != socket.id) {
-                    match.score = "15 - " +  String(15 - players[socket.id]["hand"].length)
+                    match.score = "15 - " +  String(15 - players[socket.id]["goal"].length)
                 }
             });
             // Find both users
