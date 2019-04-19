@@ -127,7 +127,7 @@ function mainSocketListener(io, urls) {
             });
         });
         // Code block for a user declining a friend request
-        socket.on("declinerequest", function(data) {
+        socket.on("declinerequest", function(id) {
             // Find the current user
             User.findById(socket.userId, function(err, user) {
                 if(err) {

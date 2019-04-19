@@ -126,7 +126,7 @@ $(function() {
         // Draw goal deck
         $(".you").append("<span class='card goal ml-5' style='background-image: url(" + players[socket.id]["goal"][0].url + ");' num='" + players[socket.id]["goal"][0].value + "'></span>");
         if (players.length > 1) {
-            // Checking to see i the user has the other player's socket id
+            // Checking to see if the user has the other player's socket id
             if (otherSocket) {
                 // If so, draw the amount of cards they have showing the back of the cards and not the value
                 for (var i = 0; i < players[otherSocket]["hand"].length; i++) {

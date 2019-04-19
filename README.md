@@ -78,3 +78,7 @@ Images:
  - All card images (1 - 12, "Pass", the back, and the deck) were made on my own using Microsoft Paint
  - The image in the "/howtoplay" page was made on my own using a screenshot and Microsoft Word
  - Background images were taken from http://unsplash.com
+
+ ### Game Idea
+ 
+ The idea for this card game is based off an already existing card game called Skip Bo. Card game graphics are copyrightable, but card game rules are not. I made all the graphics on my own and only referenced the rules of the game when making my app. 

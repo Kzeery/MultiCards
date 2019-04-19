@@ -183,10 +183,10 @@ $(function() {
         $(".friend-invites-length").text($(".invite").length / 2);
         if($(this).hasClass("btn-success")) {
             // If you click yes, send "acceptrequest" message
-            socket.emit("acceptrequest", $(this).attr("friendId"));
+            socket.emit("acceptrequest", $(this).attr("friend"));
         } else {
             // Otherwise emit "declinerequest" message
-            socket.emit("declinerequest",  $(this).attr("friendId"));
+            socket.emit("declinerequest",  $(this).attr("friend"));
         }
         e.stopPropagation();
     });
