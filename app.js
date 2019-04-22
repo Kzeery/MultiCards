@@ -83,10 +83,11 @@ app.get("/game/:id", function(req, res) {
     res.redirect("/");
 });
 
+// Catching bad routes just redirects home
 app.get("*", function(req, res) {
-    req.flash("error", "That was not a valid route. Redirected back home.")
     return res.redirect("/");
 });
+
 // Starting the server
 server.listen(process.env.PORT, process.env.IP, function() {
     console.log("server has started!");
