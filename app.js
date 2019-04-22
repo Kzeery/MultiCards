@@ -15,7 +15,7 @@ const mainSocketListener = require("./exports/mainsocket"), // Websocket listene
       app                = express(); // Creating an express app
                            require('dotenv').config(); // Saves all environment variables set in file ".env" to process.env
 
-// app.use("/", httpsRedirect());
+app.use("/", httpsRedirect());
 const router = require("./exports/routes");
 
 // App setup block
