@@ -58,10 +58,11 @@ app.use(function(req, res, next) {
     next();
 });
 if(process.env.NODE_ENV != "Development") {
-    app.use(function(req, res) {
+    app.use(function(req, res, next) {
         if(!req.secure) {
             res.redirect("https://" + req.headers.host + req.url);
         }
+        next();
     });
 }
 // // Initializing the server and socketIO as well as a list of accessible game urls.
