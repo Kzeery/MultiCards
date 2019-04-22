@@ -57,6 +57,13 @@ app.use(function(req, res, next) {
     res.locals.success = req.flash("success");
     next();
 });
+if(process.env.NODE_ENV != "Development") {
+    app.use(function(req, res) {
+        if(!req.secure) {
+            res.redirect("https://" + req.headers.host + req.url);
+        }
+    });
+}
 // // Initializing the server and socketIO as well as a list of accessible game urls.
 const server  = http.Server(app),
       io      = socketIO(server),
@@ -76,7 +83,7 @@ app.get("/game/:id", function(req, res) {
     res.redirect("/");
 });
 
-app.get("/*", function(req, res) {
+app.get("*", function(req, res) {
     req.flash("error", "That was not a valid route. Redirected back home.")
     return res.redirect("/");
 });
