@@ -10,6 +10,7 @@ const mainSocketListener = require("./exports/mainsocket"), // Websocket listene
       passport           = require("passport"), // Authentication
       express            = require("express"), // Routing
       http               = require("http"), // Making the express server interact with SocketIO
+      https              = require("https"),
       app                = express(); // Creating an express app
                            require('dotenv').config(); // Saves all environment variables set in file ".env" to process.env
 const router = require("./exports/routes");
@@ -57,6 +58,7 @@ app.use(function(req, res, next) {
     res.locals.success = req.flash("success");
     next();
 });
+var server;
 if(process.env.NODE_ENV != "Development") {
     app.use(function(req, res, next) {
         if(!req.secure) {
@@ -65,10 +67,12 @@ if(process.env.NODE_ENV != "Development") {
             next();
         }
     });
+    server = https.Server(app);
+} else {
+    server  = http.Server(app);
 }
 // // Initializing the server and socketIO as well as a list of accessible game urls.
-const server  = http.Server(app),
-      io      = socketIO(server),
+const io      = socketIO(server),
       urls    = [];
 
 
