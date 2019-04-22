@@ -65,7 +65,7 @@ app.use(function(req, res, next) {
 
 // // Initializing the server and socketIO as well as a list of accessible game urls.
 
-const server  = https.Server(app),
+const server  = http.Server(app),
       io      = socketIO(server),
       urls    = [];
 
