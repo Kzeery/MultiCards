@@ -60,7 +60,7 @@ app.use(function(req, res, next) {
 if(process.env.NODE_ENV != "Development") {
     app.use(function(req, res, next) {
         if(!req.secure) {
-            res.redirect("https://" + req.headers.host + req.url);
+            res.redirect("https://" + req.url);
         }
         next();
     });
