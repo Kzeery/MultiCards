@@ -1,6 +1,7 @@
 const mainSocketListener = require("./exports/mainsocket"), // Websocket listener for the index pages
       session            = require("express-session"), // Gets the users session
       MongoDBStore       = require("connect-mongodb-session")(session), // Stores the users session in the database
+      router             = require("./exports/routes"); // Routes exported from a different file
       LocalStrategy      = require("passport-local"), // For authentication
       flash              = require("connect-flash"), // For giving error messages to users
       User               = require("./models/user"), // Mongoose user model
@@ -10,13 +11,12 @@ const mainSocketListener = require("./exports/mainsocket"), // Websocket listene
       passport           = require("passport"), // Authentication
       express            = require("express"), // Routing
       http               = require("http"), // Making the express server interact with SocketIO
-      httpsRedirect      = require('express-https-redirect');
-      https              = require("https"),
+      httpsRedirect      = require('express-https-redirect'), // For secure redirection
       app                = express(); // Creating an express app
                            require('dotenv').config(); // Saves all environment variables set in file ".env" to process.env
 
 app.use("/", httpsRedirect());
-const router = require("./exports/routes");
+
 
 // App setup block
 // // Mongoose setup
