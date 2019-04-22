@@ -10,10 +10,14 @@ const mainSocketListener = require("./exports/mainsocket"), // Websocket listene
       passport           = require("passport"), // Authentication
       express            = require("express"), // Routing
       http               = require("http"), // Making the express server interact with SocketIO
+      httpsRedirect      = require('express-https-redirect');
       https              = require("https"),
       app                = express(); // Creating an express app
                            require('dotenv').config(); // Saves all environment variables set in file ".env" to process.env
+
+app.use("/", httpsRedirect());
 const router = require("./exports/routes");
+
 // App setup block
 // // Mongoose setup
 mongoose.set('useNewUrlParser', true);
@@ -58,21 +62,11 @@ app.use(function(req, res, next) {
     res.locals.success = req.flash("success");
     next();
 });
-var server;
-if(process.env.NODE_ENV != "Development") {
-    app.use(function(req, res, next) {
-        if(!req.secure) {
-            return res.redirect("https://" + req.headers.host + req.url);
-        } else {
-            next();
-        }
-    });
-    server = https.Server(app);
-} else {
-    server  = http.Server(app);
-}
+
 // // Initializing the server and socketIO as well as a list of accessible game urls.
-const io      = socketIO(server),
+
+const server  = https.Server(app),
+      io      = socketIO(server),
       urls    = [];
 
 
