@@ -222,7 +222,7 @@ $(function() {
                                 $(".game .btn-danger").show(); // Show the button to end the user's turn
                             }
                         // Code block for playing a card into a play pile. You cannot play a card you discarded on the same turn, and the card's value must be one greater than the top card's value unless it is a "Pass"
-                        } else if ((($(".selected").attr("num") === "pass" && $(e.target).attr("num")) || (Number($(".selected").attr("num")) === Number($(e.target).attr("num")) + 1)) && !$(".selected").hasClass("turn-discard")) {
+                        } else if ((($(".selected").attr("num") === "pass" && $(e.target).attr("num")) || (Number($(".selected").attr("num")) === Number($(e.target).attr("num")) + 1)) && !$(".selected").hasClass("turn-discard") && $(e.target).parent().hasClass("play")) {
                             var fullPile = false;
                             // Creating a string of the card html
                             if ($(".selected").attr("num") === "pass") {
@@ -242,7 +242,7 @@ $(function() {
                             }
 
                             // Code block for playing a card from the goal pile
-                            if ($(".selected").hasClass("goal")) {
+                            if ($(".selected").hasClass("goal") && !$(e.target).hasClass("")) {
                                 // Update play pile and player's goal pile to reflect changes
                                 players["play"][index].push(players[socket.id]["goal"].shift());
                                 // If the pile was full, send that pile to the garbage
