@@ -39,7 +39,7 @@ class Deck {
             if(!this.cards.length) {
                 this.cards = this.garbage;
                 this.garbage = [];
-                deck.shuffle();
+                this.shuffle();
             }
             hand.push(this.cards.shift());
         }
