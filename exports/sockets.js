@@ -190,12 +190,12 @@ function socketListener(url, io) {
                         user.save();
                     }
                 });
-                // Dealing with async. After 2 seconds, the match is saved and there are no more socket listeners at that location.
-                setTimeout(function() {
-                    match.save();
-                    listener.removeAllListeners();
-                }, 2000)
             }
+            // Dealing with async. After 2 seconds, the match is saved and there are no more socket listeners at that location.
+            setTimeout(function() {
+                match.save();
+                listener.removeAllListeners();
+            }, 2000)
         });
     
     });
