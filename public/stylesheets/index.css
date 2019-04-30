@@ -1,6 +1,14 @@
 html, body {
     min-height: 100%;
 }
+#game-icon {
+    background-image: url("../favicon.ico");
+    background-position: center;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+}
 body {
     background-image: url("../background/background.jpg");
     -webkit-background-size: 100% 100%;
@@ -33,7 +41,7 @@ body {
     text-align: center;
 }
 .index h1, #card-game {
-    color: #138496;
+    color: rgb(63, 71, 204);
 }
 
 .my-btn {
