@@ -10,7 +10,7 @@ function socketListener(url, io) {
     // There are more than one socket listener for these games. Each time a user connects to a game, a new socket listener for that game in the namespace of that url created.
     var listener = io.of(url);
     // The players object will have all of the user's information such as their hand, their goal deck, and their discard piles.
-    var players = { "length": 0, "play": { "1": [], "2": [], "3": [], "4": [] } };
+    var players = { length: 0, play: { 1: [], 2: [], 3: [], 4: [] } };
     // Creating arrays holding the mongoDB userIds of the players and the socket.ids of the players 
     var userIds = [];
     var ids = [];
@@ -80,9 +80,9 @@ function socketListener(url, io) {
         });
 
         // Whenever a playing pile reaches 12, it will emit a "fullpile" message to the server.
-        socket.on("fullPile", function (index) {
+        socket.on("fullPile", function (index, newCards) {
             // Adds all the cards in that pile to the garabge.
-            deck.addGarbage(players["play"][index]);
+            deck.addGarbage(newCards);
             // Resets the pile to have nothing in it on the server side.
             players["play"][index] = [];
         });
@@ -102,7 +102,6 @@ function socketListener(url, io) {
     
                     }
                 }
-    
             }
             // Draw the new screen with the cards and start the turn
             listener.emit("deal", players);

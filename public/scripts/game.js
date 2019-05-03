@@ -247,7 +247,7 @@ $(function() {
                                 players["play"][index].push(players[socket.id]["goal"].shift());
                                 // If the pile was full, send that pile to the garbage
                                 if(fullPile) {
-                                    socket.emit("fullPile", index)
+                                    socket.emit("fullPile", index, players.play[index])
                                     players["play"][index] = [];
                                 }
 
@@ -271,7 +271,7 @@ $(function() {
                                 players["play"][index].push(players[socket.id]["discard"][$(".selected").index()].pop());
                                 // If the pile was full, send that pile to the garbage
                                 if(fullPile) {
-                                    socket.emit("fullPile", index)
+                                    socket.emit("fullPile", index, players.play[index]);
                                     players["play"][index] = [];
                                 }
                                 updatedPlayers = players;
@@ -288,10 +288,10 @@ $(function() {
                             // Code block for playing a card from your hand
                             } else {
                                 // Update the players variable to remove the hand card and add to the play pile
-                                players["play"][index].push(players[socket.id]["hand"].splice($(".selected").index(), 1));
+                                players["play"][index].push(players[socket.id]["hand"].splice($(".selected").index(), 1)[0]);
                                 // If the pile was full, send that pile to the garbage
                                 if(fullPile) {
-                                    socket.emit("fullPile", index)
+                                    socket.emit("fullPile", index, players.play[index]);
                                     players["play"][index] = [];
                                 }
                                 updatedPlayers = players;
