@@ -26,13 +26,13 @@ class Deck {
     }
     // Shuffles the array of cards so that it is in a random order
     shuffle() {
-        for(let x = 0; x < 2; x++) {
+        for(let x = 0; x < 2; x++) { 
             for (let i = this.cards.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
                 [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]]; // swap elements
             }
         }
-    };
+    }
     // Take the top "num" amount of cards from the array and return a new array with that amount of cards
     deal(num) {
         var hand = [];
