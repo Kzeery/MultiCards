@@ -11,11 +11,10 @@ const mainSocketListener = require("./exports/mainsocket"), // Websocket listene
       passport           = require("passport"), // Authentication
       express            = require("express"), // Routing
       http               = require("http"), // Making the express server interact with SocketIO
-      httpsRedirect      = require('express-https-redirect'), // For secure redirection
+    //   httpsRedirect      = require('express-https-redirect'), // For secure redirection
       app                = express(); // Creating an express app
                            require('dotenv').config(); // Saves all environment variables set in file ".env" to process.env
 
-app.use("/", httpsRedirect());
 
 
 // App setup block
