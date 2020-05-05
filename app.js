@@ -72,7 +72,9 @@ const server  = http.Server(app),
 // Calling the mainSocketListener for all pages. This is what allows users to get notifications and updates in real time about online friends, friend requests, etc...
 mainSocketListener(io, urls);
 app.get("*", function(req, res) {
-    return res.redirect("http://" + req.url);
+    console.log("http://" + req.get("host") + req.originalUrl);
+    return res.redirect("http://" + req.get("host") + req.originalUrl);
+
 });
 app.use("/", router);
 
