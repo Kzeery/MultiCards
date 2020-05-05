@@ -73,6 +73,9 @@ const server  = http.Server(app),
 mainSocketListener(io, urls);
 
 app.use("/", router);
+app.get("*", function(req, res) {
+    res.redirect("http://" + req.headers.host + req.url);
+});
 
 // Render the game page if and only if the url id is valid. Urls only open when a user accepts a game invite and closes after. No random user can join that website after.
 app.get("/game/:id", function(req, res) {
