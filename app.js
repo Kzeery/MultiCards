@@ -71,11 +71,11 @@ const server  = http.Server(app),
 
 // Calling the mainSocketListener for all pages. This is what allows users to get notifications and updates in real time about online friends, friend requests, etc...
 mainSocketListener(io, urls);
-
-app.use("/", router);
 app.get("*", function(req, res) {
     res.redirect("http://" + req.headers.host + req.url);
 });
+app.use("/", router);
+
 
 // Render the game page if and only if the url id is valid. Urls only open when a user accepts a game invite and closes after. No random user can join that website after.
 app.get("/game/:id", function(req, res) {
